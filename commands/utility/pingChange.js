@@ -10,7 +10,7 @@ module.exports =
     async execute(interaction)
     {
         await interaction.reply('Pong!');
-        await wait(5_000);
+        await wait(2_000);
         await interaction.editReply('Pong again!');
     },
 };
