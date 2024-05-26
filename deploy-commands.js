@@ -60,4 +60,5 @@ const rest = new REST().setToken(token);
     {
         console.error(error);
     }
+    
 })();
