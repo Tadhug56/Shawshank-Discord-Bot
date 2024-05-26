@@ -10,6 +10,7 @@ module.exports =
     async execute(interaction)
     {
         await interaction.deferReply(); // await interaction.deferReply({ ephemeral: true });
+        await interaction.followUp('Waiting 5 seconds...');
         await wait(5_000);
         await interaction.editReply('Deferred pong!');
     },
