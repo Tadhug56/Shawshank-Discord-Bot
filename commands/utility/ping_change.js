@@ -4,13 +4,13 @@ const wait = require('node:timers/promises').setTimeout;
 module.exports =
 {
     data: new SlashCommandBuilder()
-        .setName('followup_ping')
-        .setDescription('Replies with ping and then sends a secret message!'),
+        .setName('ping_change')
+        .setDescription('Replies with pong and then changes!'),
 
     async execute(interaction)
     {
         await interaction.reply('Pong!');
-        await wait(5_000);
-        await interaction.followUp({ content: 'Not really! :face_with_hand_over_mouth:', ephemeral: true });
+        await wait(2_000);
+        await interaction.editReply('Pong again!');
     },
 };
