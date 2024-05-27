@@ -6,7 +6,7 @@ const { token } = require('./config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] }); // Create a new client instance
 
-client.commands = new Collection();
+client.commands = new Collection(); // Command storing
 
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
@@ -56,7 +56,6 @@ for(const file of eventFiles)
         client.on(event.name, (...args) => event.execute(...args));
     }
 }
-
 
 // Log in to Discord with your client's token
 client.login(token);
