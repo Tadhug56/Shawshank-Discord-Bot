@@ -7,6 +7,7 @@ const { token } = require('./config.json');
 const client = new Client({ intents: [GatewayIntentBits.Guilds] }); // Create a new client instance
 
 client.commands = new Collection(); // Command storing
+client.cooldowns = new Collection();
 
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
