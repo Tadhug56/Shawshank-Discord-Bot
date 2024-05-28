@@ -15,8 +15,7 @@ module.exports =
                     .setName('reason')
                     .setDescription('The reason for banning'))
             .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
-            .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
-            .setDMPermission(false),
+            .setDMPermission(false), // Not available for use in DMs
     
     async execute(interaction)
     {
