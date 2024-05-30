@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 
 module.exports = 
 {
@@ -22,7 +22,28 @@ module.exports =
         const target = interaction.options.getUser('target');
         const reason = interaction.options.getString('reason') ?? 'No reason provided';
 
-        await interaction.reply(`Banning ${target.username} for reason : ${reason}`);
+        // Buttons
+        const confirm = new ButtonBuilder() // Confirm
+            .setCustomId('confirm')
+            .setLabel('Confirm Ban')
+            .setStyle(ButtonStyle.Danger);
+
+        const cancel = new ButtonBuilder() // Cancel
+            .setCustomId('cancel')
+            .setLabel('Cancel')
+            .setStyle(ButtonStyle.Secondary);
+
+        const row = new ActionRowBuilder()
+            .addComponents(cancel, confirm);
+            
+        
+        await interaction.reply(
+        {
+            content: `Are you sure you want to ban ${target} for reason ${reason}?`,
+            components: [row],
+        });
+
+        await interaction.followUp(`Banning ${target.username} for reason : ${reason}`);
         await interaction.guild.members.ban(target);
-    }
+    },
 };
