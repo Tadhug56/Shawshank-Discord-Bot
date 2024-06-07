@@ -37,13 +37,33 @@ module.exports =
             .addComponents(cancel, confirm);
             
         
-        await interaction.reply(
+        const response = await interaction.reply(
         {
             content: `Are you sure you want to ban ${target} for reason ${reason}?`,
             components: [row],
         });
 
-        await interaction.followUp(`Banning ${target.username} for reason : ${reason}`);
-        await interaction.guild.members.ban(target);
+        const collectorFilter = i => i.user.id === interaction.user.id;
+
+        try
+        {
+            const confirmation = await response.awaitMessageComponent({ filter: collectorFilter, time: 60_000});
+
+            if(confirmation.customId === 'confirm')
+            {
+                await interaction.guild.members.ban(target);
+                await confirmation.update({content: `Banning ${target.username} for reason : ${reason}`, components: [] });
+            }
+
+            else if(confirmation.customId === 'cancel')
+            {
+                await confirmation.update({ content: 'Ban cancelled', components: [] })
+            }
+        }
+
+        catch(e)
+        {
+            await interaction.editReply({ content: 'Confirmation not recieved within 1 minute, cancelling', components: [] });
+        }
     },
 };
