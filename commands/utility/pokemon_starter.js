@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, StringSelectMenuOptionBuilder, StringSelectMenuBuilder, ActionRowBuilder} = require('discord.js');
+const { SlashCommandBuilder, StringSelectMenuOptionBuilder, StringSelectMenuBuilder, ActionRowBuilder, ComponentType} = require('discord.js');
 
 module.exports =
 {
@@ -31,10 +31,18 @@ module.exports =
         const row = new ActionRowBuilder()
                 .addComponents(select);
         
-        await interaction.reply(
+        const response = await interaction.reply(
         {  
             content: 'Choose your own starter!',
             components: [row],
         });
+
+        const collector = response.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 3_600_000 });
+
+        collector.on('collect', async i =>
+        {
+            const selection = i.values[0];
+            await i.reply(`${i.user} has selected ${selection}!`);3
+        })
     },
 };
