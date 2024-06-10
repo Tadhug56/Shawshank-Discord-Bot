@@ -1,4 +1,4 @@
-const { Events, Collection } = require('discord.js');
+const { Events, Collection, ModalBuilder } = require('discord.js');
 
 module.exports = 
 {
@@ -77,6 +77,29 @@ module.exports =
             try
             {
                 await command.autocomplete(interaction);
+            }
+
+            catch(error)
+            {
+                console.error(error);
+            }
+        }
+
+        else if(interaction.isModalSubmit())
+        {
+            const command = interaction.client.commands.get(interaction.commandName);
+
+            if(!command)
+            {
+                console.error(`No command matching ${interaction.commandName} was found.`);
+                return;
+            }
+
+            try
+            {
+                await command.execute(interaction);
+                await interaction.reply({ content: 'Your submission was reveived successfully!', ephemeral: true });
+                console.log(interaction);
             }
 
             catch(error)
