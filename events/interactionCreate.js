@@ -107,5 +107,10 @@ module.exports =
                 console.error(error);
             }
         }
+
+        else if(interaction.isUserContextMenuCommand())
+        {
+            console.log(interaction);
+        }
     },
 };
