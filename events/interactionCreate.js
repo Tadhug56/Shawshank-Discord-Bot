@@ -110,7 +110,32 @@ module.exports =
 
         else if(interaction.isUserContextMenuCommand())
         {
-            console.log(interaction);
+            const command = interaction.client.commands.get(interaction.commandName);
+           
+            try
+            {
+                await command.execute(interaction);
+            }
+
+            catch(error)
+            {
+                console.error(error);
+            }
+        }
+
+        else if(interaction.isMessageContextMenuCommand())
+        {
+            const command = interaction.client.commands.get(interaction.commandName);
+
+            try
+            {
+                await command.execute(interaction);
+            }
+
+            catch(error)
+            {
+                console.error(error);
+            }
         }
     },
 };

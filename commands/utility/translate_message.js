@@ -3,11 +3,14 @@ const { ContextMenuCommandBuilder, ApplicationCommandType, SlashCommandBuilder }
 module.exports =
 {
     data: new ContextMenuCommandBuilder()
-        .setName('user_information')
-        .setType(ApplicationCommandType.User),
+        .setName('translate_message')
+        .setType(ApplicationCommandType.Message),
 
     async execute(interaction)
     {
-       
+       const targetMessage = interaction.targetMessage;
+
+       await interaction.reply(`Original message : ${targetMessage}\nTranslated messsage : `);
+
     }
 }

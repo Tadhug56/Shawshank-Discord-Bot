@@ -8,6 +8,8 @@ module.exports =
 
     async execute(interaction)
     {
-       
+       const targetUser = interaction.targetUser;
+
+       interaction.reply(`Username : ${targetUser.username}\nID : ${targetUser.id}\nUser tag : ${targetUser.tag}`);
     }
 }
