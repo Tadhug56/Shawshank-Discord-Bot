@@ -26,10 +26,10 @@ module.exports =
                     .setDescription('Tadhg Mulvey')
                     .setValue('Tadhg'),
 
-                new StringSelectMenuOptionBuilder()
+                /*new StringSelectMenuOptionBuilder()
                     .setLabel('Ronan')
                     .setDescription('Ronan Greene')
-                    .setValue('Ronan'),
+                    .setValue('Ronan'),*/
 
                 new StringSelectMenuOptionBuilder()
                     .setLabel('Lughadh')
@@ -55,6 +55,41 @@ module.exports =
                     .setLabel('Alex')
                     .setDescription('Alex Forsyth')
                     .setValue('Alex'),
+
+                new StringSelectMenuOptionBuilder()
+                    .setLabel('Chris')
+                    .setDescription('Christopher Lacy')
+                    .setValue('Chris'),
+
+                /*new StringSelectMenuOptionBuilder()
+                    .setLabel('Fionn')
+                    .setDescription('Fionn Stack')
+                    .setValue('Fionn'),*/
+
+                /*new StringSelectMenuOptionBuilder()
+                    .setLabel('JOD')
+                    .setDescription('James O'Donoghue')
+                    .setValue('JOD'),*/
+
+                new StringSelectMenuOptionBuilder()
+                    .setLabel('Kai')
+                    .setDescription('Kai Liu')
+                    .setValue('Kai'),
+
+                new StringSelectMenuOptionBuilder()
+                    .setLabel('Oscar')
+                    .setDescription('Oscar Allen')
+                    .setValue('Oscar'),
+
+                new StringSelectMenuOptionBuilder()
+                    .setLabel('Ben')
+                    .setDescription('Ben McCarron')
+                    .setValue('Ben'),
+
+                new StringSelectMenuOptionBuilder()
+                    .setLabel('Jack')
+                    .setDescription('Jack Mulhall')
+                    .setValue('Jack'),
             );
 
         const row = new ActionRowBuilder()
@@ -78,7 +113,15 @@ module.exports =
             ['Mark']: 0,
             ['JamesMc']: 0,
             ['JamesB']: 0,
-            ['Alex']: 0
+            ['Alex']: 0,
+            ['Chris']: 0,
+            ['Fionn']: 0,
+            ['JOD']: 0,
+            ['Kai']: 0,
+            ['Oscar']: 0,
+            ['Ben']: 0,
+            ['Jack']: 0
+
         };
 
         voters.clear(); // Clear voters
