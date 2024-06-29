@@ -1,7 +1,9 @@
-const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 // List of participants (this can be dynamically set or passed as arguments)
 const participants = ['Ryan', 'Tadhg', 'Ronan', 'Lughadh', 'Mark', 'James Mc', 'James B', 'Alex'];
+let participantsList = [...participants];
+let firstRun = true;
 
 module.exports =
 {
@@ -13,28 +15,87 @@ module.exports =
     {
         // Simulate the spinning wheel effect
         let messageContent = '**Spinning the wheel!**\n';
-        const spinTime = 10_000; // Total time of spinning in secs_ms
+        let reply;
+        const spinTime = 4_000; // Total time of spinning in ms
         const spinInterval = 300; // Interval for changing the displayed participant
 
-        await interaction.reply({ content: messageContent, fetchReply: true });
+        if(firstRun === true)
+        {
+            reply = await interaction.reply({ content: messageContent, fetchReply: true });
+            console.log('IF block');
+        }
 
+        else
+        {
+            reply = await interaction.followUp({ content: messageContent, fetchReply: true });
+            console.log('Else block');
+        }
+
+        // Update message command that candles the spinning of the wheel
         const updateMessage = async (index) =>
         {
             if (index < spinTime / spinInterval)
             {
-                
-                const currentParticipant = participants[Math.floor(Math.random() * participants.length)];
-                //messageContent += `\n${currentParticipant}`;
-                await interaction.editReply({ content: `${messageContent}${currentParticipant}` });
+                const currentParticipant = participantsList[Math.floor(Math.random() * participantsList.length)];
+                await reply.edit({ content: `${messageContent}${currentParticipant}` });
                 setTimeout(() => updateMessage(index + 1), spinInterval);
             }
             
             else
             {
                 // After spinning, select a random winner
-                const winner = participants[Math.floor(Math.random() * participants.length)];
-                const finalMessageContent = `\n\n🎉 The wheel stopped! The winner is **${winner}**! 🎉`;
-                await interaction.editReply({ content: `${messageContent}${finalMessageContent}` });
+                const winnerIndex = Math.floor(Math.random() * participantsList.length);
+                const winner = participantsList[winnerIndex];
+                const finalMessageContent = `${messageContent}\n\n🎉 The wheel stopped! The winner is **${winner}**! 🎉`;
+                await reply.edit({ content: finalMessageContent });
+
+                // Remove the winner from the participants array
+                participantsList.splice(winnerIndex, 1);
+                firstRun = false;
+
+                // Create buttons for reroll or cancel
+                const row = new ActionRowBuilder().addComponents
+                (
+                    new ButtonBuilder()
+                        .setCustomId('reroll')
+                        .setLabel('Reroll')
+                        .setStyle(ButtonStyle.Primary),
+                    new ButtonBuilder()
+                        .setCustomId('cancel')
+                        .setLabel('Cancel')
+                        .setStyle(ButtonStyle.Secondary)
+                );
+
+                await reply.edit({ content: finalMessageContent, components: [row] });
+
+                const filter = i => i.customId === 'reroll' || i.customId === 'cancel';
+                const collector = reply.createMessageComponentCollector({ filter, time: 15000 });
+
+                collector.on('collect', async i =>
+                {
+                    if (i.customId === 'reroll')
+                    {
+                        await i.update({ content: 'Rerolling...', components: [] });
+                        participantsList = participantsList.length > 0 ? participantsList : [...participants]; // Ensure participantsList is reset if empty
+                        await module.exports.execute(interaction); // Rerun the command
+                    }
+                    
+                    else if (i.customId === 'cancel')
+                    {
+                        participantsList = [...participants]; // Reset the participants array
+                        await i.update({ content: 'The wheel has been reset for future use.', components: [] });
+                    }
+                });
+
+                collector.on('end', collected =>
+                {
+                    if (collected.size === 0)
+                    {
+                        reply.edit({ content: 'No action taken. The wheel has been reset for future use.', components: [] });
+                        participantsList = [...participants];
+                        firstRun = true;
+                    }
+                });
             }
         };
 
