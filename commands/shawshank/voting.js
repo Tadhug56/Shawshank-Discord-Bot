@@ -41,10 +41,11 @@ module.exports =
                     .setDescription('Mark Daly')
                     .setValue('Mark'),
 
-                new StringSelectMenuOptionBuilder()
+                /*new StringSelectMenuOptionBuilder()
                     .setLabel('James Mc')
                     .setDescription('James McCarthy')
                     .setValue('JamesMc'),
+                    */
 
                 new StringSelectMenuOptionBuilder()
                     .setLabel('James B')
@@ -71,25 +72,25 @@ module.exports =
                     .setDescription('James O'Donoghue')
                     .setValue('JOD'),*/
 
-                new StringSelectMenuOptionBuilder()
+                /*new StringSelectMenuOptionBuilder()
                     .setLabel('Kai')
                     .setDescription('Kai Liu')
-                    .setValue('Kai'),
+                    .setValue('Kai'),*/
 
-                new StringSelectMenuOptionBuilder()
+                /*new StringSelectMenuOptionBuilder()
                     .setLabel('Oscar')
                     .setDescription('Oscar Allen')
-                    .setValue('Oscar'),
+                    .setValue('Oscar'),*/
 
-                new StringSelectMenuOptionBuilder()
+                /*new StringSelectMenuOptionBuilder()
                     .setLabel('Ben')
                     .setDescription('Ben McCarron')
-                    .setValue('Ben'),
+                    .setValue('Ben'),*/
 
-                new StringSelectMenuOptionBuilder()
+                /*new StringSelectMenuOptionBuilder()
                     .setLabel('Jack')
                     .setDescription('Jack Mulhall')
-                    .setValue('Jack'),
+                    .setValue('Jack'),*/
             );
 
         const row = new ActionRowBuilder()
@@ -101,7 +102,7 @@ module.exports =
             components: [row],
         });
 
-        const collector = response.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 10_000 });
+        const collector = response.createMessageComponentCollector({ componentType: ComponentType.StringSelect, time: 20_000 });
 
         // Voting options
         let voteCounts =
