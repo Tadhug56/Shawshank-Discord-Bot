@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 // List of participants (this can be dynamically set or passed as arguments)
-const participants = ['Ryan', 'Tadhg', 'Ronan', 'Lughadh', 'Mark', 'James Mc', 'James B', 'Alex'];
+const participants = ['Ryan', 'Tadhg', 'Chris', 'Lughadh', 'Mark', 'James B', 'Alex'];
 let participantsList = [...participants];
 let firstRun = true;
 
