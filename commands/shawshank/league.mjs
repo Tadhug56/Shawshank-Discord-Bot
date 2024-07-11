@@ -9,7 +9,7 @@ const region = 'europe';
 
 // Main function
 
-async function main()
+export async function fetchMatchData(matchNumber)
 {
     const puuid = await getAccountByRiotId();
     if (puuid) 
@@ -19,15 +19,20 @@ async function main()
         if (matchList)
         {
             const matchArray = matchList
-
+            
+            // If matches are found
             if (matchArray && matchArray.length > 0)
             {
-                const matchData = await getMatchData(matchArray[0]);
+                const matchData = await getMatchData(matchArray[matchNumber]);
 
-                getParticipantData(matchData, puuid);
+                const participantData = getParticipantData(matchData, puuid);
+                console.log(participantData);
+                return participantData;
             }
         }
     }
+
+    return null;
 }
 
 async function getAccountByRiotId()
@@ -41,7 +46,6 @@ async function getAccountByRiotId()
         }
 
         const data = await response.json();
-        console.log(data);
 
         return data.puuid;
     }
@@ -65,8 +69,6 @@ async function getMatchList(puuid)
 
         const data = await response.json();
 
-        console.log(data);
-
         return data;
     }
 
@@ -89,8 +91,6 @@ async function getMatchData(matchId)
 
         const data = await response.json();
 
-        console.log(data);
-
         return data;
     }
 
@@ -109,14 +109,20 @@ async function getParticipantData(matchData, targetPuuid)
 
         participants.forEach(participant =>
         {
-            console.log('Puuid : ', participant.puuid);
             if (participant.puuid === targetPuuid)
             {
                 targetParticipant = participant;
+                console.log(targetParticipant);
             }
         });
 
-        console.log(targetParticipant);
+        return {
+            name: gameName,
+            kills: targetParticipant.kills,
+            deaths: targetParticipant.deaths,
+            assists: targetParticipant.assists,
+            imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp1dEKTURorvg6H9kfbe9N9nBFMALoaRkYQQ&s'
+        };
 
     }
 
@@ -127,4 +133,4 @@ async function getParticipantData(matchData, targetPuuid)
     
 };
 
-main();
+fetchMatchData();
