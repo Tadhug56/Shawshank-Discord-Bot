@@ -2,16 +2,17 @@ import fetch from 'node-fetch';
 
 const riotKey = 'RGAPI-a0454f01-b90d-4b55-a0ac-5c184940f86c';
 
-const tagline = 'IRE';
-const gameName = 'Tadhug56';
 
 const region = 'europe';
 
 // Main function
 
-export async function fetchMatchData(matchNumber)
+export async function fetchMatchData(matchNumber, username, tagline)
 {
-    const puuid = await getAccountByRiotId();
+    const gameName = username;
+    const tagLine = tagline;
+    const puuid = await getAccountByRiotId(gameName, tagLine);
+
     if (puuid) 
     {
         const matchList = await getMatchList(puuid);
@@ -25,8 +26,7 @@ export async function fetchMatchData(matchNumber)
             {
                 const matchData = await getMatchData(matchArray[matchNumber]);
 
-                const participantData = getParticipantData(matchData, puuid);
-                console.log(participantData);
+                const participantData = getParticipantData(matchData, puuid, username);
                 return participantData;
             }
         }
@@ -35,7 +35,7 @@ export async function fetchMatchData(matchNumber)
     return null;
 }
 
-async function getAccountByRiotId()
+async function getAccountByRiotId(gameName, tagline)
 {
     try
     {
@@ -52,7 +52,7 @@ async function getAccountByRiotId()
     
     catch (error)
     {
-        console.error('Error:', error.message);
+        console.error('Error:!', error.message);
     }
 };
 
@@ -100,7 +100,7 @@ async function getMatchData(matchId)
     }
 };
 
-async function getParticipantData(matchData, targetPuuid)
+async function getParticipantData(matchData, targetPuuid, username)
 {
     try
     {
@@ -112,16 +112,15 @@ async function getParticipantData(matchData, targetPuuid)
             if (participant.puuid === targetPuuid)
             {
                 targetParticipant = participant;
-                console.log(targetParticipant);
             }
         });
 
         return {
-            name: gameName,
+            name: username,
             kills: targetParticipant.kills,
             deaths: targetParticipant.deaths,
             assists: targetParticipant.assists,
-            imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp1dEKTURorvg6H9kfbe9N9nBFMALoaRkYQQ&s'
+            imageUrl: `https://ddragon.leagueoflegends.com/cdn/14.13.1/img/profileicon/${targetParticipant.profileIcon}.png`
         };
 
     }
