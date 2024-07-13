@@ -31,7 +31,7 @@ module.exports =
 
             const embed = new EmbedBuilder()
                 .setColor(0x0099FF)
-                .setTitle('League Stats')
+                .setTitle(`${username} OP.GG`)
                 .setURL(`https://www.op.gg/summoners/euw/${username}-${tagline}`)
                 .setDescription('Your League stats from recent matches')
                 .setThumbnail(stats.imageUrl)
