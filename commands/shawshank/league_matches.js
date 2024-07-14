@@ -36,8 +36,14 @@ module.exports =
                 .setDescription('Your League stats from recent matches')
                 .setThumbnail(stats.imageUrl)
                 .addFields(
-                    { name: 'Name', value: `${stats.name}`, inline: true }
+                    { name: 'Name', value: `${stats.name}`, inline: true},
+                    //{ name: '\u200B', value: '\u200B' }
                 )
+                .addFields(
+                    { name: 'Champion', value: `${stats.championName}`, inline: true },
+                    { name: ' ', value: ' ', inline: true }
+                )
+                .setImage(stats.championImage)
                 .addFields(
                     { name: 'Kills', value: `${stats.kills}`, inline: true },
                     { name: 'Deaths', value: `${stats.deaths}`, inline: true },
@@ -90,16 +96,26 @@ module.exports =
                 }
 
                 const newEmbed = new EmbedBuilder()
-                    .setColor(0x0099FF)
-                    .setTitle('League Stats')
-                    .setThumbnail(stats.imageUrl)
-                    .addFields(
-                        { name: 'Name', value: `${stats.name}`, inline: true },
-                        { name: 'Kills', value: `${stats.kills}`, inline: true },
-                        { name: 'Deaths', value: `${stats.deaths}`, inline: true },
-                        { name: 'Assists', value: `${stats.assists}`, inline: true },
-                    );
-
+                .setColor(0x0099FF)
+                .setTitle(`${username} OP.GG`)
+                .setURL(`https://www.op.gg/summoners/euw/${username}-${tagline}`)
+                .setDescription('Your League stats from recent matches')
+                .setThumbnail(stats.imageUrl)
+                .addFields(
+                    { name: 'Name', value: `${stats.name}`, inline: true},
+                    //{ name: '\u200B', value: '\u200B' }
+                )
+                .addFields(
+                    { name: 'Champion', value: `${stats.championName}`, inline: true },
+                    { name: ' ', value: ' ', inline: true }
+                )
+                .setImage(stats.championImage)
+                .addFields(
+                    { name: 'Kills', value: `${stats.kills}`, inline: true },
+                    { name: 'Deaths', value: `${stats.deaths}`, inline: true },
+                    { name: 'Assists', value: `${stats.assists}`, inline: true },
+                );
+                
                 await i.editReply({ embeds: [newEmbed], components: [row] });
             });
 
