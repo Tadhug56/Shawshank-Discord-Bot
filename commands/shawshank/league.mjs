@@ -120,6 +120,8 @@ async function getParticipantData(matchData, targetPuuid, username)
             kills: targetParticipant.kills,
             deaths: targetParticipant.deaths,
             assists: targetParticipant.assists,
+            championName: targetParticipant.championName,
+            championImage: `https://ddragon.leagueoflegends.com/cdn/14.13.1/img/champion/${targetParticipant.championName}.png`,
             imageUrl: `https://ddragon.leagueoflegends.com/cdn/14.13.1/img/profileicon/${targetParticipant.profileIcon}.png`
         };
 
