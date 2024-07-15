@@ -11,6 +11,12 @@ export async function fetchMatchData(matchNumber, username, tagline)
 {
     const gameName = username;
     const tagLine = tagline;
+
+    if(matchNumber === null || username === null || tagline === null)
+    {
+        return;
+    }
+
     const puuid = await getAccountByRiotId(gameName, tagLine);
 
     if (puuid) 
@@ -39,10 +45,10 @@ async function getAccountByRiotId(gameName, tagline)
 {
     try
     {
-        const response = await fetch(`https://${region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(gameName)}/${encodeURIComponent(tagline)}?api_key=${riotKey}`);
+        const response = await fetch(`https://${region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${gameName}/${tagline}?api_key=${riotKey}`);
         if (!response.ok)
         {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`HTTP error! getAccountByRiotId Status: ${response.status}`);
         }
 
         const data = await response.json();
@@ -64,7 +70,7 @@ async function getMatchList(puuid)
 
         if (!response.ok)
         {
-            throw new Error(`HTTP error! Status : ${response.status}`);
+            throw new Error(`HTTP error!! Status : ${response.status}`);
         }
 
         const data = await response.json();
@@ -86,7 +92,7 @@ async function getMatchData(matchId)
 
         if (!response.ok)
         {
-            throw new Error(`HTTP error! Status : ${response.status}`);
+            throw new Error(`HTTP error!!! Status : ${response.status}`);
         }
 
         const data = await response.json();
@@ -133,5 +139,3 @@ async function getParticipantData(matchData, targetPuuid, username)
     }
     
 };
-
-fetchMatchData();
