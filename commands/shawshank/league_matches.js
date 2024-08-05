@@ -45,8 +45,13 @@ module.exports =
                 )
                 .addFields(
                     { name: 'Champion', value: `${stats.championName}`, inline: true },
-                    { name: ' ', value: ' ', inline: true }
+                    //{ name: ' ', value: ' ', inline: true }
                 )
+
+                .addFields(
+                    { name: 'Lane', value: `${stats.lane}`, inline: true },
+                )
+
                 .setImage(stats.championImage)
                 .addFields(
                     { name: 'Kills', value: `${stats.kills}`, inline: true },
@@ -113,8 +118,13 @@ module.exports =
                     )
                     .addFields(
                         { name: 'Champion', value: `${stats.championName}`, inline: true },
-                        { name: ' ', value: ' ', inline: true }
+                        //{ name: ' ', value: ' ', inline: true }
                     )
+    
+                    .addFields(
+                        { name: 'Lane', value: `${stats.lane}`, inline: true },
+                    )
+    
                     .setImage(stats.championImage)
                     .addFields(
                         { name: 'Kills', value: `${stats.kills}`, inline: true },
