@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/Tadhug56/Shawshank-Discord-Bot#readme",
   "dependencies": {
+    "@supabase/supabase-js": "^2.48.1",
+    "axios": "^1.7.9",
     "discord.js": "^14.15.2",
     "dotenv": "^16.4.5",
     "node-fetch": "^3.3.2"
