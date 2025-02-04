@@ -3,6 +3,14 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+const port = 3000;
+
+// Express server setup
+app.use(bodyParser.json());
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] }); // Create a new client instance
 
@@ -60,3 +68,10 @@ for(const file of eventFiles)
 
 // Log in to Discord with client token
 client.login(token);
+
+client.on('message', message => {
+    if(message.content.toLowerCase() === 'test')
+    {
+        message.channel.send("Responding!!!!");
+    }
+})
